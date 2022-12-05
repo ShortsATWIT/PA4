@@ -1,0 +1,38 @@
+public abstract class Shape2D {
+    final private String color;
+    final private String shapeName;
+    final public static double THRESH = 1.0E-5;
+
+    public static boolean closeEnough(double a, double b) {
+        return Math.abs(a-b) <= THRESH;
+    }
+    
+    public Shape2D(String color, String shapeName) {
+        this.color = color;
+        this.shapeName = shapeName;
+    }
+    
+    final public String getColor() {
+        return color;
+    }
+    private String vToString() {
+        final StringBuilder sb = new StringBuilder();
+        final Point2D[] v = getVertices();
+        if (v.length > 0) {
+            sb.append(v[0]);
+            for (int i=1; i<v.length; i++) {
+                sb.append(String.format(", %s", v[i]));
+            }
+        }
+        return sb.toString();
+    }
+    @Override
+    final public String toString() {
+        return String.format("%s %s @ (%s): center=%s, perimeter=%.3f, area=%.3f",
+        color, shapeName, vToString(), getCenter(), getPerimeter(), getArea());
+    }
+    public abstract double getArea();
+    public abstract double getPerimeter();
+    public abstract Point2D getCenter();
+    public abstract Point2D[] getVertices();
+}
