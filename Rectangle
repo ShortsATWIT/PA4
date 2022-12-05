@@ -1,0 +1,54 @@
+public class Rectangle extends Shape2D {
+    private final Point2D ll;
+    private final Point2D ur;
+    private final Point2D c;
+    private final Point2D[] v;
+    private final double a;
+    private final double p;
+    
+    public Rectangle(String color, Point2D p1, Point2D p2) {
+        super(color, "Rectangle");
+        ll = new Point2D(Math.min(p1.getX(), p2.getX()), Math.min(p1.getY(), p2.getY()));
+        ur = new Point2D(Math.max(p1.getX(), p2.getX()), Math.max(p1.getY(), p2.getY()));
+        final Point2D ul = new Point2D(ll.getX(), ur.getY());
+        final Point2D lr = new Point2D(ur.getX(), ll.getY());
+        v = new Point2D[] {ll, ul, ur, lr};
+        final double l = ll.distanceTo(lr);
+        final double h = ll.distanceTo(ul);
+        p = 2*l + 2*h;
+        a = l*h;
+        c = new Point2D(ll.getX() + 0.5*l, ll.getY() + 0.5*h);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Rectangle) {
+            final Rectangle r = (Rectangle) o;
+            return (ll.equals(r.ll) && ur.equals(r.ur));
+        } else {
+            return false;
+        }
+    }
+    public Point2D getLowerLeft() {
+        return ll;
+    }
+    public Point2D getUpperRight() {
+        return ur;
+    }
+    @Override
+    public double getArea() {
+        return a;
+    }
+    @Override
+    public double getPerimeter() {
+        return p;
+    }
+    @Override
+    public Point2D getCenter() {
+        return c;
+    }
+    @Override
+    public Point2D[] getVertices() {
+        return v;
+    }
+}
