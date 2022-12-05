@@ -1,0 +1,49 @@
+import java.util.ArrayList;
+
+public class Shifter {
+	public static final int NUM_LETTERS = ('z' - 'a') + 1;
+	private final String[] shifts = new String[NUM_LETTERS];
+	private static String shift(String s, StringBuilder sb, int n) {
+		for (int i=0; i<s.length(); i++) {
+			final char c = s.charAt(i);
+			final boolean isLowercase = (c>='a' && c<='z');
+			final boolean isUppercase = (c>='A' && c<='Z');
+			final char r;
+			if (isLowercase || isUppercase) {
+				final char base = isLowercase?'a':'A';
+				r = (char) (base + ((NUM_LETTERS + (c - base) + n) % NUM_LETTERS));
+				} else {
+					r = c;
+					}
+			sb.setCharAt(i, r);
+			}
+		return sb.toString();
+		}
+	public Shifter(String s) {
+		final StringBuilder sb = new StringBuilder(s);
+		shifts[0] = s;
+		for (int i=1; i<NUM_LETTERS; i++) {
+			shifts[i] = shift(s, sb, i);
+			}
+		}
+	private static int shiftMod(int n) {
+		return (NUM_LETTERS + n) % NUM_LETTERS;
+		}
+	public String shift(int n) {
+		return shifts[shiftMod(n)];
+		}
+	
+	public int[] findShift(String sub) {
+		ArrayList<Integer> n = new ArrayList<>();
+		for (int i=0; i<NUM_LETTERS; i++) {
+			if (shift(i).indexOf(sub) != -1) {
+				n.add(i);
+				}
+			}
+		int[] r = new int[n.size()];
+		for (int i=0; i<n.size(); i++) {
+			r[i] = n.get(i);
+			}
+		return r;
+		}
+	}
