@@ -1,0 +1,34 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+public class PA4_P3 {
+    public static void removeRepeated(ArrayList<Integer> list) {
+        final ArrayList<Integer> temp = new ArrayList<>();
+        for (int i : list) {
+            if (!temp.contains(i)) {
+                temp.add(i);
+            }
+        }
+        list.clear();
+        list.addAll(temp);
+        list.trimToSize();
+    }
+    public static void main(String[] args) {
+        final Scanner input = new Scanner(System.in);
+        final ArrayList<Integer> list = new ArrayList<>();
+        System.out.printf("Enter integers: ");
+        while (input.hasNextInt()) {
+            list.add(input.nextInt());
+        }
+        if (list.isEmpty()) {
+            System.out.printf("No values entered.");
+        } else {
+            removeRepeated(list);
+            System.out.printf("The distinct integer(s):");
+            for (int i : list) {
+                System.out.printf(" %d", i);
+            }
+        }
+        System.out.printf("%n");
+        input.close();
+    }
+}
